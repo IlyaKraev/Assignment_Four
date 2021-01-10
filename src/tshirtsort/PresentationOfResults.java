@@ -127,11 +127,11 @@ public class PresentationOfResults {
         System.out.println("----SORT BY FABRIC DESCENDING----");
         print.printList(bbs.bubbleSortTShirts(randomTShirts, 1, 2));
 
-//        System.out.println("----SORT BY SIZE, COLOR, FABRIC ASCENDING----");
-//        print.printList();
-//
-//        System.out.println("----SORT BY SIZE, COLOR, FABRIC DESCENDING----");
-//        print.printList();
+        System.out.println("----SORT BY SIZE, COLOR, FABRIC ASCENDING----");
+        print.printList(bbs.bubbleSortSizeColorFabric(randomTShirts, 0));
+
+        System.out.println("----SORT BY SIZE, COLOR, FABRIC DESCENDING----");
+        print.printList(bbs.bubbleSortSizeColorFabric(randomTShirts, 1));
     }
 
     private void bucketSort() {
@@ -139,16 +139,16 @@ public class PresentationOfResults {
         List<RandomTShirt> randomTShirts = new ArrayList<>(printRandomTShirts());
 
         System.out.println("----UNSORTED LIST----");
-        print.printList(bs.bucketSortTShirts(randomTShirts, 0, 0));
+        print.printList(randomTShirts);
 
         System.out.println("----SORT BY SIZE ASCENDING----");
-        print.printList(bs.bucketSortTShirts(randomTShirts, 0, 1));
+        print.printList(bs.bucketSortTShirts(randomTShirts, 0, 0));
 
         System.out.println("----SORT BY SIZE DESCENDING----");
-        print.printList(bs.bucketSortTShirts(randomTShirts, 1, 0));
+        print.printList(bs.bucketSortTShirts(randomTShirts, 0, 1));
 
         System.out.println("----SORT BY COLOR ASCENDING----");
-        print.printList(bs.bucketSortTShirts(randomTShirts, 1, 1));
+        print.printList(bs.bucketSortTShirts(randomTShirts, 1, 0));
 
         System.out.println("----SORT BY COLOR DESCENDING----");
         print.printList(bs.bucketSortTShirts(randomTShirts, 1, 1));

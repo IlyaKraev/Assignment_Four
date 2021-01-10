@@ -2,8 +2,10 @@ package sorting;
 
 import java.util.ArrayList;
 import java.util.List;
+import models.enums.Color;
 import models.enums.Size;
 import models.random.RandomTShirt;
+import print.Print;
 
 public class BucketSort extends Util {
 
@@ -35,23 +37,20 @@ public class BucketSort extends Util {
 
         // Step 3, print
         // just print the contents of each bucket
+        List<RandomTShirt> bucketSorted = new ArrayList<>();
         if (sortingType == 0) {
-            List<RandomTShirt> bucketSorted = new ArrayList<>();
             for (List<RandomTShirt> bucket : buckets) {
                 bucketSorted.addAll(bucket);
             }
 
-            return (bucketSorted);
         } else {
             invert(buckets);
-            List<RandomTShirt> bucketSorted = new ArrayList<>();
             for (List<RandomTShirt> bucket : buckets) {
                 bucketSorted.addAll(bucket);
             }
 
-            return (bucketSorted);
-
         }
+        return (bucketSorted);
 
     }
 
@@ -63,6 +62,7 @@ public class BucketSort extends Util {
         QuickSort qs = new QuickSort();
 
         List<RandomTShirt>[] buckets = new ArrayList[noOfBuckets];
+
         for (int i = 0; i < noOfBuckets; i++) { // noOfBuckets
             buckets[i] = new ArrayList<RandomTShirt>(); // initialize the buckets
         }
@@ -70,61 +70,54 @@ public class BucketSort extends Util {
         switch (sortingType) {
             // ASC
             case 0:
+
                 // Step 2, divide into buckets, Sort By Size
                 for (RandomTShirt tShirt : randomTShirts) {
                     buckets[tShirt.getSize().ordinal()].add(tShirt);
                 }
 
-                 
                 // Step 3, Sort By Color
                 for (List<RandomTShirt> bucket : buckets) {
-                    qs.quickSortTShirts(bucket, 0, bucket.size() - 1, 1, 0);
-                }
-
-                // Step 4, Sort By Fabric
-                for (List<RandomTShirt> bucket : buckets) {
-                    List<RandomTShirt> bucketByFabric = new ArrayList<>(bucket);
-                    bucketSortTShirts(bucketByFabric, 1, 0);
-                    qs.quickSortTShirts(bucketByFabric, 0, bucketByFabric.size() - 1, 2, 0);
-
-                    bucket = bucketByFabric;
-                }
-
-                // combine all the buckets to 1 List
-                for (List<RandomTShirt> bucket : buckets) {
-                    for (RandomTShirt tShirt : bucket) {
-                        tShirts.add(tShirt);
+                    bucket = bucketSortTShirts(bucket, 1, 0);
+                    for (RandomTShirt randomTShirt : bucket) {
+                        tShirts.add(randomTShirt);
                     }
                 }
                 break;
+
+            // Step 4, Sort By Fabric
+//                for (List<RandomTShirt> bucket : buckets) {
+//                    List<RandomTShirt> bucketByFabric = new ArrayList<>(bucket);
+//                    bucketSortTShirts(bucketByFabric, 2, 0);
+//                    bucket = bucketByFabric;
+//                }
+//                 combine all the buckets to 1 List
             // DESC
             case 1:
                 // Step 2, divide into buckets, Sort By Size
                 for (RandomTShirt tShirt : randomTShirts) {
                     buckets[tShirt.getSize().ordinal()].add(tShirt);
+
                 }
                 qs.invert(buckets);
 
                 // Step 3, Sort By Color
                 for (List<RandomTShirt> bucket : buckets) {
-                    
-                    qs.quickSortTShirts(bucket, 0, bucket.size() - 1, 1, 1);
-                }
-
-                // Step 4, Sort By Fabric
-                for (List<RandomTShirt> bucket : buckets) {
-                    List<RandomTShirt> bucketByFabric = new ArrayList<>(bucket);
-                    bucketSortTShirts(bucketByFabric, 2, 1);
-                }
-
-                // combine all the buckets to 1 List
-                for (List<RandomTShirt> bucket : buckets) {
-                    for (RandomTShirt tShirt : bucket) {
-                        tShirts.add(tShirt);
+                    bucket = bucketSortTShirts(bucket, 1, 1);
+                    for (RandomTShirt randomTShirt : bucket) {
+                        tShirts.add(randomTShirt);
                     }
                 }
 
+                // Step 4, Sort By Fabric
+//                for (List<RandomTShirt> bucket : buckets) {
+//                    List<RandomTShirt> bucketByFabric = new ArrayList<>(bucket);
+//                    bucketSortTShirts(bucketByFabric, 2, 1);
+//                    bucket = bucketByFabric;
+//                }
+                // combine all the buckets to 1 List
                 break;
+
         }
         return (tShirts);
     }

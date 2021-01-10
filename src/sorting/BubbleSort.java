@@ -2,11 +2,10 @@ package sorting;
 
 import java.util.ArrayList;
 import java.util.List;
+import models.enums.Size;
 import models.random.RandomTShirt;
 
-
 public class BubbleSort {
-
 
     public List<Integer> bubbleSort(List<Integer> arr) {
         List<Integer> arr2 = new ArrayList<>(arr);
@@ -166,19 +165,22 @@ public class BubbleSort {
         }
         return (arr2);
     }
-    
-    private List<RandomTShirt> bubbleSortSizeColorFabric(List<RandomTShirt> arr, int sortingType) {// sortingType = 0 - ASC
-        List<RandomTShirt> arr2 = new ArrayList<>(arr);
-        
-            
-        
-                            arr2 = bubbleSortTShirtsBySize(arr, 0);
-                // Color    
-                    arr2 = bubbleSortTShirtsByColor(arr, 0);
-            // Fabric
-             arr2 = bubbleSortTShirtsByFabric(arr, 0);
 
-        
-        return(arr2);
+    public List<RandomTShirt> bubbleSortSizeColorFabric(List<RandomTShirt> arr, int sortingType) {// sortingType = 0 - ASC
+        List<RandomTShirt> arr2 = new ArrayList<>(arr);
+
+
+        switch (sortingType) {
+            // ASC
+            case 0:
+                arr2 = bubbleSortTShirtsBySize(bubbleSortTShirtsByColor(bubbleSortTShirtsByFabric(arr, 0), 0), 0);
+                break;
+
+            case 1:
+                arr2 = bubbleSortTShirtsBySize(bubbleSortTShirtsByColor(bubbleSortTShirtsByFabric(arr, 1), 1), 1);
+                break;
+        }
+
+        return (arr2);
     }
 }

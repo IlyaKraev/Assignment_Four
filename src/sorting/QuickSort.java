@@ -2,10 +2,7 @@ package sorting;
 
 import java.util.ArrayList;
 import java.util.List;
-import models.Timer;
-import models.enums.Size;
 import models.random.RandomTShirt;
-import print.Print;
 
 public class QuickSort extends Util {
 
@@ -114,8 +111,8 @@ public class QuickSort extends Util {
             switch (sortingType) {
                 // ASC
                 case 0:
-                    
-                    pi = partition(arr, low, high, sortByAttribute, sortingType); // part <--- Size, Color, Fabric
+
+                    pi = partition(arr, low, high, sortByAttribute, 0); // part <--- Size, Color, Fabric
 
                     // Recursively sort elements before 
                     // partition and after partition 
@@ -124,7 +121,7 @@ public class QuickSort extends Util {
                     break;
                 // DESC
                 case 1:
-                    pi = partition(arr, low, high, sortByAttribute, sortingType); // part <--- Size, Color, Fabric
+                    pi = partition(arr, low, high, sortByAttribute, 1); // part <--- Size, Color, Fabric
 
                     // Recursively sort elements before 
                     // partition and after partition 
@@ -134,95 +131,32 @@ public class QuickSort extends Util {
             }
         }
 
-        return(arr);
+        return (arr);
     }
 
     public List<RandomTShirt> quickSortBySizeColorFabric(List<RandomTShirt> arr, int low, int high, int sortingType) {
         List<RandomTShirt> tShirts = new ArrayList<>();
         if (low < high) {
-            int pi = 0;
-            Print print = new Print();
-            // Create an array for each size
-            int noOfSizeVariables = Size.values().length;
-            List<RandomTShirt>[] sizes = new ArrayList[noOfSizeVariables];
-            for (int i = 0; i < noOfSizeVariables; i++) {
-                sizes[i] = new ArrayList<RandomTShirt>();
-            }
             switch (sortingType) {
                 // ASC
                 case 0:
 
-                    // Size sort
-                    pi = partition(arr, low, high, 0, 0); // part <--- Size, Color, Fabric
-                    // Recursively sort elements before 
-                    // partition and after partition 
-                    quickSortTShirts(arr, low, pi - 1, 0, 0);
-                    quickSortTShirts(arr, pi + 1, high, 0, 0);
-
-                    // Add the sorted shirts into the matching array, grouped by size 
-                    for (RandomTShirt tShirt : arr) {
-                        sizes[tShirt.getSize().ordinal()].add(tShirt);
+                    for (RandomTShirt randomTShirt : quickSortTShirts(arr, low, high, 0, 0)) {
+                        tShirts.add(randomTShirt);
                     }
 
-                    // Color sort the size arrays
-                    for (List<RandomTShirt> size : sizes) {
-                        quickSortTShirts(size, 0, size.size() - 1, 1, 0);
-                    }
-
-                    // Fabric sort the size arrays
-                    for (List<RandomTShirt> size : sizes) {
-                        List<RandomTShirt> quickSortByFabric = new ArrayList<>(size);
-                        quickSortTShirts(size, 0, quickSortByFabric.size() - 1, 2, 0);
-                        size = quickSortByFabric;
-                        System.out.println(quickSortByFabric);
-                    }
-
-                    // combine the sorted lists from inside the size arrays
-                    for (List<RandomTShirt> size : sizes) {
-                        for (RandomTShirt randomTShirt : size) {
-                            tShirts.add(randomTShirt);
-                        }
-                    }
                     break;
                 // DESC
                 case 1:
-                    // Size sort
-                    pi = partition(arr, low, high, 0, sortingType); // part <--- Size, Color, Fabric
-                    // Recursively sort elements before 
-                    // partition and after partition 
-                    quickSortTShirts(arr, low, pi - 1, 0, 1);
-                    quickSortTShirts(arr, pi + 1, high, 0, 1);
 
-                    // Add the sorted shirts into the matching array, grouped by size 
-                    for (RandomTShirt tShirt : arr) {
-                        sizes[tShirt.getSize().ordinal()].add(tShirt);
-                    }
-
-                    // Method for inverting the array of sizes
-                    invert(sizes);
-
-                    // Color sort the size arrays
-                    for (List<RandomTShirt> size : sizes) {
-                        quickSortTShirts(size, 0, size.size() - 1, 1, 1);
-                    }
-
-                    // Fabric sort the size arrays
-                    for (List<RandomTShirt> size : sizes) {
-                        List<RandomTShirt> quickSortByFabric = new ArrayList<>(size);
-                        quickSortTShirts(quickSortByFabric, 0, quickSortByFabric.size() - 1, 2, 1);
-                        size = quickSortByFabric;
-                    }
-
-                    // combine the sorted lists from inside the size arrays
-                    for (List<RandomTShirt> size : sizes) {
-                        for (RandomTShirt randomTShirt : size) {
-                            tShirts.add(randomTShirt);
-                        }
+                    for (RandomTShirt randomTShirt : quickSortTShirts(arr, low, high, 0, 1)) {
+                        
+                        tShirts.add(randomTShirt);
                     }
                     break;
             }
-        }
-            return(tShirts);
-    }
 
+        }
+        return (tShirts);
+    }
 }
