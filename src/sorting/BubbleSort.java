@@ -2,7 +2,6 @@ package sorting;
 
 import java.util.ArrayList;
 import java.util.List;
-import models.enums.Size;
 import models.random.RandomTShirt;
 
 public class BubbleSort {

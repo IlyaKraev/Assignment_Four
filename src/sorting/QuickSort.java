@@ -141,7 +141,9 @@ public class QuickSort extends Util {
                 // ASC
                 case 0:
 
-                    for (RandomTShirt randomTShirt : quickSortTShirts(arr, low, high, 0, 0)) {
+                    List<RandomTShirt> arr2 = new ArrayList<>(quickSortTShirts(arr, low, high, 0, 0));
+                    
+                    for (RandomTShirt randomTShirt : quickSortTShirts(arr2, 0, 6, 0, 0)) {
                         tShirts.add(randomTShirt);
                     }
 
@@ -149,7 +151,9 @@ public class QuickSort extends Util {
                 // DESC
                 case 1:
 
-                    for (RandomTShirt randomTShirt : quickSortTShirts(arr, low, high, 0, 1)) {
+                    List<RandomTShirt> arr3 = new ArrayList<>(quickSortTShirts(arr, low, high, 0, 1));
+                    
+                    for (RandomTShirt randomTShirt : quickSortTShirts(arr3, low, high, 0, 1)) {
                         
                         tShirts.add(randomTShirt);
                     }
